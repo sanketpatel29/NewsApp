@@ -1,4 +1,4 @@
-package me.amitshekhar.newsapp.di
+package com.sanket.newsapp.di
 
 import javax.inject.Scope
 

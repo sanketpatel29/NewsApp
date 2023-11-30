@@ -1,11 +1,18 @@
-package com.sanket.newsapp.di.component
+package com.sanket.newsapp.di.module
 
-import dagger.Component
+import android.content.Context
+import com.sanket.newsapp.NewsApplication
+import com.sanket.newsapp.di.ApplicationContext
 import dagger.Module
-import javax.inject.Singleton
+import dagger.Provides
 
-@Singleton
-@Component(modules = )
-interface ApplicationComponent {
+@Module
+class ApplicationModule(private val application: NewsApplication) {
+
+    @ApplicationContext
+    @Provides
+    fun provideContext(): Context {
+        return application
+    }
 
 }

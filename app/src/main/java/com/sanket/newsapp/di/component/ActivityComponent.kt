@@ -1,14 +1,13 @@
-package me.amitshekhar.newsapp.di.component
+package com.sanket.newsapp.di.component
 
+import com.sanket.newsapp.di.ActivityScope
+import com.sanket.newsapp.di.module.ActivityModule
+import com.sanket.newsapp.ui.topheadline.TopHeadlineActivity
 import dagger.Component
-import me.amitshekhar.newsapp.di.ActivityScope
-import me.amitshekhar.newsapp.di.module.ActivityModule
-import me.amitshekhar.newsapp.ui.topheadline.TopHeadlineActivity
 
 @ActivityScope
 @Component(dependencies = [ApplicationComponent::class], modules = [ActivityModule::class])
 interface ActivityComponent {
 
     fun inject(activity: TopHeadlineActivity)
-
 }

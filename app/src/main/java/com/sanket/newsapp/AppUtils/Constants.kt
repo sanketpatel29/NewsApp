@@ -1,4 +1,7 @@
 package com.sanket.newsapp.AppUtils
 
-class Constants {
+object Constants {
+
+    const val API_KEY = "c5fb8da0aa4c4e818e1db97a06162d7d"
+
 }
