@@ -18,5 +18,5 @@ data class Article(
     var url: String = "",
 
     @SerializedName("urlToImage")
-    var urlToImage: String = ""
+    var imageUrl: String = ""
 )
