@@ -2,10 +2,14 @@ package com.sanket.newsapp.di.module
 
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.sanket.newsapp.NewsApplication
+import com.sanket.newsapp.data.repository.TopHeadlineRepository
 import com.sanket.newsapp.di.ActivityContext
 import com.sanket.newsapp.di.ApplicationContext
+import com.sanket.newsapp.ui.base.ViewModelProviderFactory
 import com.sanket.newsapp.ui.topheadline.TopHeadlineActivity
+import com.sanket.newsapp.ui.topheadline.TopHeadlineViewModel
 import dagger.Module
 import dagger.Provides
 
@@ -17,4 +21,13 @@ class ActivityModule(private val activity: AppCompatActivity) {
     fun provideContext(): Context {
         return activity
     }
+
+    @Provides
+    fun provideNewsListViewModel(topHeadlineRepository: TopHeadlineRepository): TopHeadlineViewModel {
+        return ViewModelProvider(activity,
+            ViewModelProviderFactory(TopHeadlineViewModel::class) {
+                TopHeadlineViewModel(topHeadlineRepository)
+            })[TopHeadlineViewModel::class.java]
+    }
+
 }
