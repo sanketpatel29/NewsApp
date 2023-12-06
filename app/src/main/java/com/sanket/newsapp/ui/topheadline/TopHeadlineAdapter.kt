@@ -3,10 +3,12 @@ package com.sanket.newsapp.ui.topheadline
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.sanket.newsapp.data.model.Article
 import com.sanket.newsapp.databinding.TopHeadlineItemLayoutBinding
+
 
 class TopHeadlineAdapter(private val articles: ArrayList<Article>) :
     RecyclerView.Adapter<TopHeadlineAdapter.DataViewHolder>() {
@@ -20,7 +22,9 @@ class TopHeadlineAdapter(private val articles: ArrayList<Article>) :
                 .load(article.imageUrl)
                 .into(binding.imageViewBanner)
             itemView.setOnClickListener {
-
+                val builder = CustomTabsIntent.Builder()
+                val customTabsIntent = builder.build()
+                customTabsIntent.launchUrl(it.context, Uri.parse(article.url))
             }
         }
     }
