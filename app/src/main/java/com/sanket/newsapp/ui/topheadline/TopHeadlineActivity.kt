@@ -1,5 +1,8 @@
 package com.sanket.newsapp.ui.topheadline
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -13,6 +16,7 @@ import com.sanket.newsapp.NewsApplication
 import com.sanket.newsapp.R
 import com.sanket.newsapp.data.model.Article
 import com.sanket.newsapp.databinding.ActivityTopHeadlineBinding
+import com.sanket.newsapp.di.ActivityContext
 import com.sanket.newsapp.di.component.DaggerActivityComponent
 import com.sanket.newsapp.di.module.ActivityModule
 import com.sanket.newsapp.ui.base.UiState
@@ -29,6 +33,13 @@ class TopHeadlineActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityTopHeadlineBinding
 
+    companion object {
+        fun startActivity(context: Context) {
+            var intent = Intent(context, TopHeadlineActivity::class.java)
+            context.startActivity(intent)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         injectDependencies()
@@ -40,6 +51,7 @@ class TopHeadlineActivity : AppCompatActivity() {
         setupUI()
         setupObserver()
     }
+
     private fun setupUI() {
         val recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -62,10 +74,12 @@ class TopHeadlineActivity : AppCompatActivity() {
                             renderList(it.data)
                             binding.recyclerView.visibility = View.VISIBLE
                         }
+
                         is UiState.Loading -> {
                             binding.progressBar.visibility = View.VISIBLE
                             binding.recyclerView.visibility = View.GONE
                         }
+
                         is UiState.Error -> {
                             //Handle Error
                             binding.progressBar.visibility = View.GONE
