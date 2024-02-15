@@ -3,6 +3,7 @@ package com.sanket.newsapp.di.component
 import android.content.Context
 import com.sanket.newsapp.NewsApplication
 import com.sanket.newsapp.data.api.NetworkService
+import com.sanket.newsapp.data.repository.NewsSourceRepository
 import com.sanket.newsapp.data.repository.TopHeadlineRepository
 import com.sanket.newsapp.di.ApplicationContext
 import com.sanket.newsapp.di.module.ApplicationModule
@@ -22,4 +23,5 @@ interface ApplicationComponent {
 
     fun getTopHeadlineRepository(): TopHeadlineRepository
 
+    fun getNewsSourceRepository(): NewsSourceRepository
 }

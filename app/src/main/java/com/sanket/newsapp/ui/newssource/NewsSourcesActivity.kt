@@ -1,4 +1,4 @@
-package com.sanket.newsapp.ui.topheadline
+package com.sanket.newsapp.ui.newssource
 
 import android.content.Context
 import android.content.Intent
@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sanket.newsapp.NewsApplication
 import com.sanket.newsapp.R
-import com.sanket.newsapp.data.model.Article
-import com.sanket.newsapp.databinding.ActivityTopHeadlineBinding
+import com.sanket.newsapp.data.model.Source
+import com.sanket.newsapp.databinding.ActivityNewsSourcesBinding
 import com.sanket.newsapp.di.component.DaggerActivityComponent
 import com.sanket.newsapp.di.module.ActivityModule
 import com.sanket.newsapp.ui.base.BaseActivity
@@ -21,51 +21,60 @@ import com.sanket.newsapp.ui.base.UiState
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class TopHeadlineActivity : BaseActivity() {
+class NewsSourcesActivity : BaseActivity() {
 
     @Inject
-    lateinit var newsListViewModel: TopHeadlineViewModel
+    lateinit var newsSourceViewModel: NewsSourceViewModel
 
     @Inject
-    lateinit var adapter: TopHeadlineAdapter
+    lateinit var sourcesAdapter: NewsSourcesAdapter
 
-    private lateinit var binding: ActivityTopHeadlineBinding
+    private lateinit var binding: ActivityNewsSourcesBinding
 
     companion object {
         fun startActivity(context: Context) {
-            var intent = Intent(context, TopHeadlineActivity::class.java)
+            var intent = Intent(context, NewsSourcesActivity::class.java)
             context.startActivity(intent)
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         injectDependencies()
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_top_headline)
 
-        binding = ActivityTopHeadlineBinding.inflate(layoutInflater)
+        setContentView(R.layout.activity_news_sources)
+        binding = ActivityNewsSourcesBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setupUI()
-        setupObserver()
+
+        setUpUI()
+        setUpObserver()
     }
 
-    private fun setupUI() {
-        val recyclerView = binding.recyclerView
+    private fun injectDependencies() {
+        DaggerActivityComponent.builder()
+            .applicationComponent((application as NewsApplication).applicationComponent)
+            .activityModule(ActivityModule(this))
+            .build()
+            .inject(this)
+    }
+
+    private fun setUpUI() {
+
+        var recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.addItemDecoration(
             DividerItemDecoration(
-                recyclerView.context,
+                this,
                 (recyclerView.layoutManager as LinearLayoutManager).orientation
             )
         )
-        recyclerView.adapter = adapter
+        recyclerView.adapter = sourcesAdapter
     }
 
-    private fun setupObserver() {
+    private fun setUpObserver() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                newsListViewModel.uiState.collect {
+                newsSourceViewModel.uiState.collect {
                     when (it) {
                         is UiState.Success -> {
                             binding.progressBar.visibility = View.GONE
@@ -81,7 +90,7 @@ class TopHeadlineActivity : BaseActivity() {
                         is UiState.Error -> {
                             //Handle Error
                             binding.progressBar.visibility = View.GONE
-                            Toast.makeText(this@TopHeadlineActivity, it.message, Toast.LENGTH_LONG)
+                            Toast.makeText(this@NewsSourcesActivity, it.message, Toast.LENGTH_LONG)
                                 .show()
                         }
                     }
@@ -90,16 +99,8 @@ class TopHeadlineActivity : BaseActivity() {
         }
     }
 
-    private fun renderList(articleList: List<Article>) {
-        adapter.addData(articleList)
-        adapter.notifyDataSetChanged()
-    }
-
-
-    private fun injectDependencies() {
-
-        DaggerActivityComponent.builder()
-            .applicationComponent((application as NewsApplication).applicationComponent)
-            .activityModule(ActivityModule(this)).build().inject(this)
+    private fun renderList(data: List<Source>) {
+        sourcesAdapter.addData(data)
+        sourcesAdapter.notifyDataSetChanged()
     }
 }

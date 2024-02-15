@@ -29,7 +29,10 @@
 
         <activity
             android:name=".ui.topheadline.TopHeadlineActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
+        <activity
+            android:name=".ui.newssource.NewsSourcesActivity"
+            android:exported="false" />
 
     </application>
 
