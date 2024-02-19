@@ -33,6 +33,9 @@
         <activity
             android:name=".ui.newssource.NewsSourcesActivity"
             android:exported="false" />
+        <activity
+            android:name=".ui.countries.CountriesActivity"
+            android:exported="false" />
 
     </application>
 

@@ -4,6 +4,7 @@ import android.os.Bundle
 import com.sanket.newsapp.R
 import com.sanket.newsapp.databinding.ActivityHomeBinding
 import com.sanket.newsapp.ui.base.BaseActivity
+import com.sanket.newsapp.ui.countries.CountriesActivity
 import com.sanket.newsapp.ui.newssource.NewsSourcesActivity
 import com.sanket.newsapp.ui.topheadline.TopHeadlineActivity
 
@@ -22,6 +23,10 @@ class HomeActivity : BaseActivity() {
 
         binding.btnNewsSources.setOnClickListener {
             NewsSourcesActivity.startActivity(this)
+        }
+
+        binding.btnCountries.setOnClickListener {
+            CountriesActivity.startActivity(this)
         }
     }
 }
