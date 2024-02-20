@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sanket.newsapp.NewsApplication
 import com.sanket.newsapp.R
+import com.sanket.newsapp.apputils.Constants
 import com.sanket.newsapp.data.model.Article
 import com.sanket.newsapp.databinding.ActivityTopHeadlineBinding
 import com.sanket.newsapp.di.component.DaggerActivityComponent
@@ -32,8 +33,15 @@ class TopHeadlineActivity : BaseActivity() {
     private lateinit var binding: ActivityTopHeadlineBinding
 
     companion object {
+        private const val NEWS_BY = "NEWS_BY"
         fun startActivity(context: Context) {
             var intent = Intent(context, TopHeadlineActivity::class.java)
+            context.startActivity(intent)
+        }
+
+        fun startActivity(context: Context, newsType: Constants.NewsType) {
+            var intent = Intent(context, TopHeadlineActivity::class.java)
+            intent.putExtra(NEWS_BY, newsType)
             context.startActivity(intent)
         }
     }
@@ -46,20 +54,46 @@ class TopHeadlineActivity : BaseActivity() {
 
         binding = ActivityTopHeadlineBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        initData()
         setupUI()
         setupObserver()
     }
 
+    private fun initData() {
+        val newsType: Constants.NewsType? = intent.getParcelableExtra(NEWS_BY)
+
+        newsType.let {
+            when (newsType) {
+                is Constants.NewsType.COUNTRY -> {
+                    newsListViewModel.fetchNewsByCountry(newsType.code)
+                    Toast.makeText(this, "Selected code is ${newsType.code}", Toast.LENGTH_SHORT).show()
+                }
+
+                is Constants.NewsType.SOURCE -> {
+                    newsListViewModel.fetchNewsBySource(newsType.id)
+                    Toast.makeText(this, "Selected code is ${newsType.id}", Toast.LENGTH_SHORT).show()
+
+                }
+
+                is Constants.NewsType.LANGUAGE -> {
+                    //todo
+                }
+            }
+        }
+
+
+
+    }
+
     private fun setupUI() {
-        val recyclerView = binding.recyclerView
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.addItemDecoration(
-            DividerItemDecoration(
-                recyclerView.context,
-                (recyclerView.layoutManager as LinearLayoutManager).orientation
-            )
+
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        binding.recyclerView.addItemDecoration(
+            DividerItemDecoration(this, LinearLayoutManager.VERTICAL)
         )
-        recyclerView.adapter = adapter
+        binding.recyclerView.adapter = adapter
+
     }
 
     private fun setupObserver() {

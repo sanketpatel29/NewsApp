@@ -12,12 +12,14 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sanket.newsapp.NewsApplication
 import com.sanket.newsapp.R
+import com.sanket.newsapp.apputils.Constants
 import com.sanket.newsapp.data.model.Source
 import com.sanket.newsapp.databinding.ActivityNewsSourcesBinding
 import com.sanket.newsapp.di.component.DaggerActivityComponent
 import com.sanket.newsapp.di.module.ActivityModule
 import com.sanket.newsapp.ui.base.BaseActivity
 import com.sanket.newsapp.ui.base.UiState
+import com.sanket.newsapp.ui.topheadline.TopHeadlineActivity
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -53,9 +55,7 @@ class NewsSourcesActivity : BaseActivity() {
     private fun injectDependencies() {
         DaggerActivityComponent.builder()
             .applicationComponent((application as NewsApplication).applicationComponent)
-            .activityModule(ActivityModule(this))
-            .build()
-            .inject(this)
+            .activityModule(ActivityModule(this)).build().inject(this)
     }
 
     private fun setUpUI() {
@@ -64,11 +64,14 @@ class NewsSourcesActivity : BaseActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.addItemDecoration(
             DividerItemDecoration(
-                this,
-                (recyclerView.layoutManager as LinearLayoutManager).orientation
+                this, (recyclerView.layoutManager as LinearLayoutManager).orientation
             )
         )
         recyclerView.adapter = sourcesAdapter
+
+        sourcesAdapter.onItemClickListener = {
+            TopHeadlineActivity.startActivity(this, Constants.NewsType.SOURCE(it.id))
+        }
     }
 
     private fun setUpObserver() {

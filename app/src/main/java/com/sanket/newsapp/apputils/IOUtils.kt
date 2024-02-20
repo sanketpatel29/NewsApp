@@ -1,4 +1,4 @@
-package com.sanket.newsapp.AppUtils
+package com.sanket.newsapp.apputils
 
 import android.content.Context
 

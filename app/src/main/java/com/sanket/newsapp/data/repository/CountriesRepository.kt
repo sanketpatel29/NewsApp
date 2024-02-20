@@ -3,8 +3,8 @@ package com.sanket.newsapp.data.repository
 import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.sanket.newsapp.AppUtils.Constants
-import com.sanket.newsapp.AppUtils.IOUtils
+import com.sanket.newsapp.apputils.Constants
+import com.sanket.newsapp.apputils.IOUtils
 import com.sanket.newsapp.data.model.Country
 import com.sanket.newsapp.di.ApplicationContext
 import kotlinx.coroutines.flow.Flow
@@ -22,6 +22,7 @@ class CountriesRepository @Inject constructor(@ApplicationContext private val co
             val countriesData = IOUtils.readJsonFromAssets(context, Constants.FILE_COUNTRIES)
             val gson = Gson()
             emit(gson.fromJson(countriesData, object : TypeToken<List<Country>>() {}.type))
+
         }.map { it }
     }
 

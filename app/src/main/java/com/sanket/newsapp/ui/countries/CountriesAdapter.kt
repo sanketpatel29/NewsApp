@@ -3,16 +3,22 @@ package com.sanket.newsapp.ui.countries
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.sanket.newsapp.apputils.OnItemClickListener
 import com.sanket.newsapp.data.model.Country
 import com.sanket.newsapp.databinding.CountryItemLayoutBinding
 
 class CountriesAdapter(private val countries: ArrayList<Country>) :
     RecyclerView.Adapter<CountriesAdapter.DataViewHolder>() {
 
+    lateinit var itemClickListener: OnItemClickListener<Country>
+
     class DataViewHolder(private val binding: CountryItemLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(country: Country) {
+        fun bind(country: Country, itemClickListener: OnItemClickListener<Country>) {
             binding.textViewCountry.text = country.name
+            binding.textViewCountry.setOnClickListener {
+                itemClickListener(country)
+            }
         }
     }
 
@@ -33,7 +39,7 @@ class CountriesAdapter(private val countries: ArrayList<Country>) :
 
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
 
-        holder.bind(countries[position])
+        holder.bind(countries[position], itemClickListener)
     }
 
     fun addData(list: List<Country>) {

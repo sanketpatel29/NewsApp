@@ -11,15 +11,17 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
-import com.sanket.newsapp.AppUtils.Logger
 import com.sanket.newsapp.NewsApplication
 import com.sanket.newsapp.R
+import com.sanket.newsapp.apputils.Constants
+import com.sanket.newsapp.apputils.Logger
 import com.sanket.newsapp.data.model.Country
 import com.sanket.newsapp.databinding.ActivityCountriesBinding
 import com.sanket.newsapp.di.component.DaggerActivityComponent
 import com.sanket.newsapp.di.module.ActivityModule
 import com.sanket.newsapp.ui.base.BaseActivity
 import com.sanket.newsapp.ui.base.UiState
+import com.sanket.newsapp.ui.topheadline.TopHeadlineActivity
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -91,18 +93,20 @@ class CountriesActivity : BaseActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.addItemDecoration(
             DividerItemDecoration(
-                this,
-                (recyclerView.layoutManager as LinearLayoutManager).orientation
+                this, (recyclerView.layoutManager as LinearLayoutManager).orientation
             )
         )
         recyclerView.adapter = countriesAdapter
+        countriesAdapter.itemClickListener = {
+//            Toast.makeText(this, "Selected code is ${it.code}", Toast.LENGTH_SHORT).show()
+            TopHeadlineActivity.startActivity(this, Constants.NewsType.COUNTRY(it.code))
+        }
     }
 
     private fun initDependencies() {
         DaggerActivityComponent.builder()
             .applicationComponent((application as NewsApplication).applicationComponent)
-            .activityModule(ActivityModule(this))
-            .build().inject(this)
+            .activityModule(ActivityModule(this)).build().inject(this)
     }
 
 }
