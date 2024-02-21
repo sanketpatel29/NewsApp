@@ -23,7 +23,7 @@ class CountriesRepository @Inject constructor(@ApplicationContext private val co
             val gson = Gson()
             emit(gson.fromJson(countriesData, object : TypeToken<List<Country>>() {}.type))
 
-        }.map { it }
+        }.map { it -> it.filter { it.code.lowercase() in Constants.COUNTRIES_SUPPORTED_BY_NEWS_API } }
     }
 
 
