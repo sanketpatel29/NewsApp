@@ -66,24 +66,32 @@ class TopHeadlineActivity : BaseActivity() {
         newsType.let {
             when (newsType) {
                 is Constants.NewsType.COUNTRY -> {
-                    newsListViewModel.fetchNewsByCountry(newsType.code)
-                    Toast.makeText(this, "Selected code is ${newsType.code}", Toast.LENGTH_SHORT).show()
+                    newsListViewModel.fetchNewsByCountry(newsType.countryCode)
+                    Toast.makeText(
+                        this, "Selected code is ${newsType.countryCode}", Toast.LENGTH_SHORT
+                    ).show()
                 }
 
                 is Constants.NewsType.SOURCE -> {
-                    newsListViewModel.fetchNewsBySource(newsType.id)
-                    Toast.makeText(this, "Selected code is ${newsType.id}", Toast.LENGTH_SHORT).show()
+                    newsListViewModel.fetchNewsBySource(newsType.sounrceId)
+                    Toast.makeText(
+                        this, "Selected source id is ${newsType.sounrceId}", Toast.LENGTH_SHORT
+                    ).show()
 
                 }
 
                 is Constants.NewsType.LANGUAGE -> {
-                    //todo
+                    newsListViewModel.fetchNewsByLanguage(newsType.languageId)
+                    Toast.makeText(
+                        this, "Selected language is ${newsType.languageId}", Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
 
-
-
+        if (newsType == null) {
+            newsListViewModel.fetchNews()
+        }
     }
 
     private fun setupUI() {

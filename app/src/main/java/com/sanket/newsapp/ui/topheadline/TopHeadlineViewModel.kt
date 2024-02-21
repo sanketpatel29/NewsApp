@@ -21,36 +21,43 @@ class TopHeadlineViewModel(private val topHeadlineRepository: TopHeadlineReposit
 //        fetchNews()
 //    }
 
-    private fun fetchNews() {
+    fun fetchNews() {
         viewModelScope.launch {
-            topHeadlineRepository.getTopHeadlines(COUNTRY)
-                .catch { e ->
-                    _uiState.value = UiState.Error(e.toString())
-                }.collect {
-                    _uiState.value = UiState.Success(it)
-                }
+            topHeadlineRepository.getTopHeadlines(COUNTRY).catch { e ->
+                _uiState.value = UiState.Error(e.toString())
+            }.collect {
+                _uiState.value = UiState.Success(it)
+            }
         }
     }
 
     fun fetchNewsByCountry(country: String) {
         viewModelScope.launch {
-            topHeadlineRepository.getNewsByCountry(country)
-                .catch { e ->
-                    _uiState.value = UiState.Error(e.toString())
-                }.collect {
-                    _uiState.value = UiState.Success(it)
-                }
+            topHeadlineRepository.getNewsByCountry(country).catch { e ->
+                _uiState.value = UiState.Error(e.toString())
+            }.collect {
+                _uiState.value = UiState.Success(it)
+            }
         }
     }
 
     fun fetchNewsBySource(source: String) {
         viewModelScope.launch {
-            topHeadlineRepository.getNewsBySources(source)
-                .catch { e ->
-                    _uiState.value = UiState.Error(e.toString())
-                }.collect {
-                    _uiState.value = UiState.Success(it)
-                }
+            topHeadlineRepository.getNewsBySources(source).catch { e ->
+                _uiState.value = UiState.Error(e.toString())
+            }.collect {
+                _uiState.value = UiState.Success(it)
+            }
+        }
+    }
+
+    fun fetchNewsByLanguage(language: String) {
+        viewModelScope.launch {
+            topHeadlineRepository.getNewsByLanguages(language).catch { e ->
+                _uiState.value = UiState.Error(e.toString())
+            }.collect {
+                _uiState.value = UiState.Success(it)
+            }
         }
     }
 }

@@ -36,6 +36,9 @@
         <activity
             android:name=".ui.countries.CountriesActivity"
             android:exported="false" />
+        <activity
+            android:name=".ui.language.LanguagesActivity"
+            android:exported="false" />
 
     </application>
 

@@ -1,6 +1,5 @@
 package com.sanket.newsapp.data.repository
 
-import com.sanket.newsapp.apputils.Constants
 import com.sanket.newsapp.data.api.NetworkService
 import com.sanket.newsapp.data.model.Article
 import kotlinx.coroutines.flow.Flow
@@ -34,5 +33,11 @@ class TopHeadlineRepository @Inject constructor(private val networkService: Netw
         }.map {
             it.articles
         }
+    }
+
+    fun getNewsByLanguages(language: String): Flow<ArrayList<Article>> {
+        return flow {
+            emit(networkService.getNewsByLanguages(language))
+        }.map { it.articles }
     }
 }

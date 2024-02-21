@@ -9,16 +9,17 @@ object Constants {
     const val COUNTRY = "us"
 
     const val FILE_COUNTRIES = "countries.json"
+    const val FILE_LANGUAGES = "languages.json"
 
     sealed class NewsType : Parcelable {
         @Parcelize
-        data class COUNTRY(var code: String) : NewsType()
+        data class COUNTRY(var countryCode: String) : NewsType()
 
         @Parcelize
-        data class SOURCE(var id: String) : NewsType()
+        data class SOURCE(var sounrceId: String) : NewsType()
 
         @Parcelize
-        data class LANGUAGE(var language: String) : NewsType()
+        data class LANGUAGE(var languageId: String) : NewsType()
     }
 
     val COUNTRIES_SUPPORTED_BY_NEWS_API = arrayListOf<String>(
