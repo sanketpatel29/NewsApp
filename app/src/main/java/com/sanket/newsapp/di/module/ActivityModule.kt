@@ -15,6 +15,7 @@ import com.sanket.newsapp.ui.language.LanguageViewModel
 import com.sanket.newsapp.ui.language.LanguagesAdapter
 import com.sanket.newsapp.ui.newssource.NewsSourceViewModel
 import com.sanket.newsapp.ui.newssource.NewsSourcesAdapter
+import com.sanket.newsapp.ui.search.SearchViewModel
 import com.sanket.newsapp.ui.topheadline.TopHeadlineAdapter
 import com.sanket.newsapp.ui.topheadline.TopHeadlineViewModel
 import dagger.Module
@@ -68,5 +69,13 @@ class ActivityModule(private val activity: AppCompatActivity) {
         return ViewModelProvider(activity, ViewModelProviderFactory(LanguageViewModel::class) {
             LanguageViewModel(languagesRepository)
         })[LanguageViewModel::class.java]
+    }
+
+    @Provides
+    fun provideSearchViewModel(topHeadlineRepository: TopHeadlineRepository): SearchViewModel {
+
+        return ViewModelProvider(activity, ViewModelProviderFactory(SearchViewModel::class) {
+            SearchViewModel(topHeadlineRepository)
+        })[SearchViewModel::class.java]
     }
 }

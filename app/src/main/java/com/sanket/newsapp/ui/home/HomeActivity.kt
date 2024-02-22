@@ -7,6 +7,7 @@ import com.sanket.newsapp.ui.base.BaseActivity
 import com.sanket.newsapp.ui.countries.CountriesActivity
 import com.sanket.newsapp.ui.language.LanguagesActivity
 import com.sanket.newsapp.ui.newssource.NewsSourcesActivity
+import com.sanket.newsapp.ui.search.SearchNewsActivity
 import com.sanket.newsapp.ui.topheadline.TopHeadlineActivity
 
 class HomeActivity : BaseActivity() {
@@ -32,6 +33,9 @@ class HomeActivity : BaseActivity() {
 
         binding.btnLanguages.setOnClickListener {
             LanguagesActivity.startActivity(this)
+        }
+        binding.btnSearch.setOnClickListener {
+            SearchNewsActivity.startActivity(this)
         }
     }
 }

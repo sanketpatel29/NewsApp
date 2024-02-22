@@ -17,6 +17,7 @@ import com.sanket.newsapp.apputils.Constants
 import com.sanket.newsapp.apputils.Logger
 import com.sanket.newsapp.data.model.Language
 import com.sanket.newsapp.databinding.ActivityCountriesBinding
+import com.sanket.newsapp.databinding.ActivityLanguagesBinding
 import com.sanket.newsapp.di.component.DaggerActivityComponent
 import com.sanket.newsapp.di.module.ActivityModule
 import com.sanket.newsapp.ui.base.BaseActivity
@@ -27,7 +28,7 @@ import javax.inject.Inject
 
 class LanguagesActivity : BaseActivity() {
 
-    private lateinit var binding: ActivityCountriesBinding
+    private lateinit var binding: ActivityLanguagesBinding
 
     @Inject
     lateinit var languageViewModel: LanguageViewModel
@@ -47,7 +48,7 @@ class LanguagesActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_languages)
-        binding = ActivityCountriesBinding.inflate(layoutInflater)
+        binding = ActivityLanguagesBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setUI()

@@ -39,6 +39,9 @@
         <activity
             android:name=".ui.language.LanguagesActivity"
             android:exported="false" />
+        <activity
+            android:name=".ui.search.SearchNewsActivity"
+            android:exported="false" />
 
     </application>
 
