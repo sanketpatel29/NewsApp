@@ -16,7 +16,6 @@ import com.sanket.newsapp.R
 import com.sanket.newsapp.apputils.Constants
 import com.sanket.newsapp.apputils.Logger
 import com.sanket.newsapp.data.model.Language
-import com.sanket.newsapp.databinding.ActivityCountriesBinding
 import com.sanket.newsapp.databinding.ActivityLanguagesBinding
 import com.sanket.newsapp.di.component.DaggerActivityComponent
 import com.sanket.newsapp.di.module.ActivityModule
