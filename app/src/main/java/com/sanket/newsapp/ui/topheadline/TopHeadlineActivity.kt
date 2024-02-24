@@ -44,6 +44,7 @@ class TopHeadlineActivity : BaseActivity() {
             intent.putExtra(NEWS_BY, newsType)
             context.startActivity(intent)
         }
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,10 +82,11 @@ class TopHeadlineActivity : BaseActivity() {
                 }
 
                 is Constants.NewsType.LANGUAGE -> {
-                    newsListViewModel.fetchNewsByLanguage(newsType.languageId)
-                    Toast.makeText(
-                        this, "Selected language is ${newsType.languageId}", Toast.LENGTH_SHORT
-                    ).show()
+                    if (newsType.languageIds.contains(",")) {
+                        newsListViewModel.fetchNewsByLanguages(newsType.languageIds.split(","))
+                    } else {
+                        newsListViewModel.fetchNewsByLanguage(newsType.languageIds)
+                    }
                 }
             }
         }
