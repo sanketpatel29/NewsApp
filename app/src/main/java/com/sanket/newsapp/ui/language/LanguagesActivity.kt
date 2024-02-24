@@ -97,8 +97,22 @@ class LanguagesActivity : BaseActivity() {
             )
         )
         recyclerView.adapter = languagesAdapter
-        languagesAdapter.onItemClickListener = {
-            TopHeadlineActivity.startActivity(this, Constants.NewsType.LANGUAGE(it.code))
+
+        binding.btnFetchNewsByLanguages.setOnClickListener {
+
+            if (languagesAdapter.getSelectedLanguages().size > 2) {
+                Toast.makeText(
+                    this,
+                    "Max 2 languages selection is allowed only",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            }
+
+            var selectedLanguages = languagesAdapter.getSelectedLanguages().joinToString { it.code }
+            Logger().d(LanguagesActivity.javaClass, "Selected languages= $selectedLanguages")
+
+            TopHeadlineActivity.startActivity(this, Constants.NewsType.LANGUAGE(selectedLanguages))
         }
     }
 
