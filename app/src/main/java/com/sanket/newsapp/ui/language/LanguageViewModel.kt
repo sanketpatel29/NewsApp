@@ -3,16 +3,18 @@ package com.sanket.newsapp.ui.language
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sanket.newsapp.data.model.Language
-import com.sanket.newsapp.data.model.Source
 import com.sanket.newsapp.data.repository.LanguagesRepository
-import com.sanket.newsapp.data.repository.NewsSourceRepository
 import com.sanket.newsapp.ui.base.UiState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class LanguageViewModel(private val languagesRepository: LanguagesRepository) : ViewModel() {
+@HiltViewModel
+class LanguageViewModel @Inject constructor(private val languagesRepository: LanguagesRepository) :
+    ViewModel() {
 
     private val _uiState = MutableStateFlow<UiState<List<Language>>>(UiState.Loading)
 

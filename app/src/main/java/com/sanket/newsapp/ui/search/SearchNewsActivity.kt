@@ -7,25 +7,24 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.sanket.newsapp.NewsApplication
 import com.sanket.newsapp.R
 import com.sanket.newsapp.data.model.Article
 import com.sanket.newsapp.databinding.ActivitySearchNewsBinding
-import com.sanket.newsapp.di.component.DaggerActivityComponent
-import com.sanket.newsapp.di.module.ActivityModule
 import com.sanket.newsapp.ui.base.BaseActivity
 import com.sanket.newsapp.ui.base.UiState
 import com.sanket.newsapp.ui.topheadline.TopHeadlineAdapter
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class SearchNewsActivity : BaseActivity() {
 
-    @Inject
     lateinit var searchViewModel: SearchViewModel
 
     @Inject
@@ -41,21 +40,19 @@ class SearchNewsActivity : BaseActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        injectDependencies()
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_search_news)
         binding = ActivitySearchNewsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setupViewModel()
         setUpUI()
         setUpObserver()
     }
 
-    private fun injectDependencies() {
-        DaggerActivityComponent.builder()
-            .applicationComponent((application as NewsApplication).applicationComponent)
-            .activityModule(ActivityModule(this)).build().inject(this)
+    private fun setupViewModel() {
+        searchViewModel = ViewModelProvider(this)[SearchViewModel::class.java]
     }
 
     private fun setUpUI() {

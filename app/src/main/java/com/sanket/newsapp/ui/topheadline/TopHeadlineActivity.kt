@@ -6,25 +6,24 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.sanket.newsapp.NewsApplication
 import com.sanket.newsapp.R
 import com.sanket.newsapp.apputils.Constants
 import com.sanket.newsapp.data.model.Article
 import com.sanket.newsapp.databinding.ActivityTopHeadlineBinding
-import com.sanket.newsapp.di.component.DaggerActivityComponent
-import com.sanket.newsapp.di.module.ActivityModule
 import com.sanket.newsapp.ui.base.BaseActivity
 import com.sanket.newsapp.ui.base.UiState
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class TopHeadlineActivity : BaseActivity() {
 
-    @Inject
     lateinit var newsListViewModel: TopHeadlineViewModel
 
     @Inject
@@ -49,16 +48,20 @@ class TopHeadlineActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        injectDependencies()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_top_headline)
 
         binding = ActivityTopHeadlineBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setUpViewModel()
         initData()
         setupUI()
         setupObserver()
+    }
+
+    private fun setUpViewModel() {
+        newsListViewModel = ViewModelProvider(this)[TopHeadlineViewModel::class.java]
     }
 
     private fun initData() {
@@ -139,11 +142,4 @@ class TopHeadlineActivity : BaseActivity() {
         adapter.notifyDataSetChanged()
     }
 
-
-    private fun injectDependencies() {
-
-        DaggerActivityComponent.builder()
-            .applicationComponent((application as NewsApplication).applicationComponent)
-            .activityModule(ActivityModule(this)).build().inject(this)
-    }
 }

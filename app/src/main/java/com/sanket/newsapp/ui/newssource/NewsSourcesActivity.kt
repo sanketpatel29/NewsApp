@@ -6,26 +6,25 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.sanket.newsapp.NewsApplication
 import com.sanket.newsapp.R
 import com.sanket.newsapp.apputils.Constants
 import com.sanket.newsapp.data.model.Source
 import com.sanket.newsapp.databinding.ActivityNewsSourcesBinding
-import com.sanket.newsapp.di.component.DaggerActivityComponent
-import com.sanket.newsapp.di.module.ActivityModule
 import com.sanket.newsapp.ui.base.BaseActivity
 import com.sanket.newsapp.ui.base.UiState
 import com.sanket.newsapp.ui.topheadline.TopHeadlineActivity
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class NewsSourcesActivity : BaseActivity() {
 
-    @Inject
     lateinit var newsSourceViewModel: NewsSourceViewModel
 
     @Inject
@@ -41,21 +40,19 @@ class NewsSourcesActivity : BaseActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        injectDependencies()
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_news_sources)
         binding = ActivityNewsSourcesBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setupViewModel()
         setUpUI()
         setUpObserver()
     }
 
-    private fun injectDependencies() {
-        DaggerActivityComponent.builder()
-            .applicationComponent((application as NewsApplication).applicationComponent)
-            .activityModule(ActivityModule(this)).build().inject(this)
+    private fun setupViewModel() {
+        newsSourceViewModel = ViewModelProvider(this)[NewsSourceViewModel::class.java]
     }
 
     private fun setUpUI() {

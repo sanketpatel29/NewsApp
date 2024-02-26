@@ -6,30 +6,29 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
-import com.sanket.newsapp.NewsApplication
 import com.sanket.newsapp.R
 import com.sanket.newsapp.apputils.Constants
 import com.sanket.newsapp.apputils.Logger
 import com.sanket.newsapp.data.model.Language
 import com.sanket.newsapp.databinding.ActivityLanguagesBinding
-import com.sanket.newsapp.di.component.DaggerActivityComponent
-import com.sanket.newsapp.di.module.ActivityModule
 import com.sanket.newsapp.ui.base.BaseActivity
 import com.sanket.newsapp.ui.base.UiState
 import com.sanket.newsapp.ui.topheadline.TopHeadlineActivity
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class LanguagesActivity : BaseActivity() {
 
     private lateinit var binding: ActivityLanguagesBinding
 
-    @Inject
     lateinit var languageViewModel: LanguageViewModel
 
     @Inject
@@ -43,15 +42,20 @@ class LanguagesActivity : BaseActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        initDependencies()
+
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_languages)
         binding = ActivityLanguagesBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setupViewModel()
         setUI()
         setObserver()
+    }
+
+    private fun setupViewModel() {
+        languageViewModel = ViewModelProvider(this)[LanguageViewModel::class.java]
     }
 
     private fun setObserver() {
@@ -114,12 +118,6 @@ class LanguagesActivity : BaseActivity() {
 
             TopHeadlineActivity.startActivity(this, Constants.NewsType.LANGUAGE(selectedLanguages))
         }
-    }
-
-    private fun initDependencies() {
-        DaggerActivityComponent.builder()
-            .applicationComponent((application as NewsApplication).applicationComponent)
-            .activityModule(ActivityModule(this)).build().inject(this)
     }
 
 }
