@@ -25,7 +25,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class NewsSourcesActivity : BaseActivity() {
 
-    lateinit var newsSourceViewModel: NewsSourceViewModel
+    private lateinit var newsSourceViewModel: NewsSourceViewModel
 
     @Inject
     lateinit var sourcesAdapter: NewsSourcesAdapter

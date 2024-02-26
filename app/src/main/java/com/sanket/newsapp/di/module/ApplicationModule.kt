@@ -1,5 +1,8 @@
 package com.sanket.newsapp.di.module
 
+import com.sanket.newsapp.apputils.Constants
+import com.sanket.newsapp.apputils.logger.AppLogger
+import com.sanket.newsapp.apputils.logger.Logger
 import com.sanket.newsapp.data.api.HeaderInterceptor
 import com.sanket.newsapp.data.api.NetworkService
 import com.sanket.newsapp.di.BaseUrl
@@ -18,7 +21,7 @@ class ApplicationModule() {
 
     @BaseUrl
     @Provides
-    fun provideBaseUrl(): String = "https://newsapi.org/v2/"
+    fun provideBaseUrl(): String = Constants.BASE_URL
 
     @Singleton
     @Provides
@@ -46,4 +49,8 @@ class ApplicationModule() {
     fun provideHeaderInterceptor(): HeaderInterceptor {
         return HeaderInterceptor()
     }
+
+    @Provides
+    @Singleton
+    fun provideLogger(): Logger = AppLogger()
 }

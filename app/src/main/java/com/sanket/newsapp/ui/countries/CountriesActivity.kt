@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.sanket.newsapp.R
 import com.sanket.newsapp.apputils.Constants
-import com.sanket.newsapp.apputils.Logger
 import com.sanket.newsapp.data.model.Country
 import com.sanket.newsapp.databinding.ActivityCountriesBinding
 import com.sanket.newsapp.ui.base.BaseActivity
@@ -29,7 +28,7 @@ class CountriesActivity : BaseActivity() {
 
     private lateinit var binding: ActivityCountriesBinding
 
-    lateinit var countriesViewModel: CountriesViewModel
+    private lateinit var countriesViewModel: CountriesViewModel
 
     @Inject
     lateinit var countriesAdapter: CountriesAdapter
@@ -86,7 +85,8 @@ class CountriesActivity : BaseActivity() {
     }
 
     private fun renderList(data: List<Country>) {
-        Logger().d(CountriesActivity::class.java, "Countries data:" + Gson().toJson(data))
+
+        logger.d(CountriesActivity::class.java, "Countries data:" + Gson().toJson(data))
         countriesAdapter.addData(data)
         countriesAdapter.notifyDataSetChanged()
     }

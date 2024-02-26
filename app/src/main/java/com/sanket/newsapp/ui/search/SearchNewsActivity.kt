@@ -25,7 +25,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class SearchNewsActivity : BaseActivity() {
 
-    lateinit var searchViewModel: SearchViewModel
+    private lateinit var searchViewModel: SearchViewModel
 
     @Inject
     lateinit var topHeadlineAdapter: TopHeadlineAdapter

@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.sanket.newsapp.R
 import com.sanket.newsapp.apputils.Constants
-import com.sanket.newsapp.apputils.Logger
 import com.sanket.newsapp.data.model.Language
 import com.sanket.newsapp.databinding.ActivityLanguagesBinding
 import com.sanket.newsapp.ui.base.BaseActivity
@@ -29,7 +28,7 @@ class LanguagesActivity : BaseActivity() {
 
     private lateinit var binding: ActivityLanguagesBinding
 
-    lateinit var languageViewModel: LanguageViewModel
+    private lateinit var languageViewModel: LanguageViewModel
 
     @Inject
     lateinit var languagesAdapter: LanguagesAdapter
@@ -53,6 +52,7 @@ class LanguagesActivity : BaseActivity() {
         setUI()
         setObserver()
     }
+
 
     private fun setupViewModel() {
         languageViewModel = ViewModelProvider(this)[LanguageViewModel::class.java]
@@ -87,7 +87,7 @@ class LanguagesActivity : BaseActivity() {
     }
 
     private fun renderList(data: List<Language>) {
-        Logger().d(LanguagesActivity::class.java, "Languages data:" + Gson().toJson(data))
+        logger.d(LanguagesActivity::class.java, "Languages data:" + Gson().toJson(data))
         languagesAdapter.addData(data)
         languagesAdapter.notifyDataSetChanged()
     }
@@ -114,7 +114,7 @@ class LanguagesActivity : BaseActivity() {
             }
 
             var selectedLanguages = languagesAdapter.getSelectedLanguages().joinToString { it.code }
-            Logger().d(LanguagesActivity.javaClass, "Selected languages= $selectedLanguages")
+            logger.d(LanguagesActivity.javaClass, "Selected languages= $selectedLanguages")
 
             TopHeadlineActivity.startActivity(this, Constants.NewsType.LANGUAGE(selectedLanguages))
         }

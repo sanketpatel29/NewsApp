@@ -3,7 +3,7 @@ package com.sanket.newsapp.ui.topheadline
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sanket.newsapp.apputils.Constants.COUNTRY
-import com.sanket.newsapp.apputils.Logger
+import com.sanket.newsapp.apputils.logger.Logger
 import com.sanket.newsapp.data.model.Article
 import com.sanket.newsapp.data.repository.TopHeadlineRepository
 import com.sanket.newsapp.ui.base.UiState
@@ -18,7 +18,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class TopHeadlineViewModel @Inject constructor(private val topHeadlineRepository: TopHeadlineRepository) :
+class TopHeadlineViewModel @Inject constructor(
+    private val topHeadlineRepository: TopHeadlineRepository,
+    private val logger: Logger
+) :
     ViewModel() {
 
     private val _uiState = MutableStateFlow<UiState<List<Article>>>(UiState.Loading)
@@ -69,7 +72,7 @@ class TopHeadlineViewModel @Inject constructor(private val topHeadlineRepository
 
         var lang1 = languages[0].trim()
         var lang2 = languages[1].trim()
-        Logger().d(TopHeadlineViewModel::class.java, "lang1= $lang1 and lang2=$lang2")
+        logger.d(TopHeadlineViewModel::class.java, "lang1= $lang1 and lang2=$lang2")
         viewModelScope.launch(Dispatchers.IO) {
 
             topHeadlineRepository.getNewsByLanguages(lang1)
@@ -82,6 +85,7 @@ class TopHeadlineViewModel @Inject constructor(private val topHeadlineRepository
                 .catch { e ->
                     _uiState.value = UiState.Error(e.toString())
                 }.collect {
+                    it.shuffle()
                     _uiState.value = UiState.Success(it)
                 }
         }
