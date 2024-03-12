@@ -1,41 +1,20 @@
 package com.sanket.newsapp.ui.home
 
 import android.os.Bundle
-import com.sanket.newsapp.R
-import com.sanket.newsapp.databinding.ActivityHomeBinding
+import androidx.activity.compose.setContent
 import com.sanket.newsapp.ui.base.BaseActivity
-import com.sanket.newsapp.ui.countries.CountriesActivity
-import com.sanket.newsapp.ui.language.LanguagesActivity
-import com.sanket.newsapp.ui.newssource.NewsSourcesActivity
-import com.sanket.newsapp.ui.search.SearchNewsActivity
-import com.sanket.newsapp.ui.topheadline.TopHeadlineActivity
+import com.sanket.newsapp.ui.base.NewsNavHost
+import com.sanket.newsapp.ui.theme.NewsAppTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeActivity : BaseActivity() {
-    private lateinit var binding: ActivityHomeBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
-
-        binding = ActivityHomeBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        binding.btnTopHeadlines.setOnClickListener {
-            TopHeadlineActivity.startActivity(this)
-        }
-
-        binding.btnNewsSources.setOnClickListener {
-            NewsSourcesActivity.startActivity(this)
-        }
-
-        binding.btnCountries.setOnClickListener {
-            CountriesActivity.startActivity(this)
-        }
-
-        binding.btnLanguages.setOnClickListener {
-            LanguagesActivity.startActivity(this)
-        }
-        binding.btnSearch.setOnClickListener {
-            SearchNewsActivity.startActivity(this)
+        setContent {
+            NewsAppTheme {
+                NewsNavHost()
+            }
         }
     }
 }

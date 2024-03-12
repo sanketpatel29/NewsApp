@@ -27,22 +27,6 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".ui.topheadline.TopHeadlineActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.newssource.NewsSourcesActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.countries.CountriesActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.language.LanguagesActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.search.SearchNewsActivity"
-            android:exported="false" />
-
     </application>
 
 </manifest>

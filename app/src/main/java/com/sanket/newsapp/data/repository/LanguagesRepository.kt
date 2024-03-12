@@ -20,8 +20,7 @@ class LanguagesRepository @Inject constructor(@ApplicationContext private val co
 
         return flow<List<Language>> {
             val countriesData = IOUtils.readJsonFromAssets(context, Constants.FILE_LANGUAGES)
-            val gson = Gson()
-            emit(gson.fromJson(countriesData, object : TypeToken<List<Language>>() {}.type))
+            emit(Gson().fromJson(countriesData, object : TypeToken<List<Language>>() {}.type))
 
         }.map { it }
     }
