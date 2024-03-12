@@ -103,7 +103,7 @@ fun SourceText(source: Source) {
 @Composable
 fun DescriptionText(description: String = "description") {
 
-    if (description.isNotEmpty())
+    if (!description.isNullOrEmpty())
         Text(
             text = description,
             style = MaterialTheme.typography.titleSmall,
