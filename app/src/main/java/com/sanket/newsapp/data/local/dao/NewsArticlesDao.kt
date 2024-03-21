@@ -15,7 +15,7 @@ interface NewsArticlesDao {
     fun getNewsArticles(): Flow<List<Article>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertNewsArticles(articles: List<Article>): List<Long>
+    fun insertNewsArticles(articles: List<Article>)
 
     @Query("DELETE FROM NewsArticle")
     fun deleteNewsArticles()
@@ -23,7 +23,7 @@ interface NewsArticlesDao {
     @Transaction
     fun deleteAndInsertAllNewsArticles(
         articles: List<Article>
-    ): List<Long> {
+    ) {
         deleteNewsArticles()
         return insertNewsArticles(articles)
     }

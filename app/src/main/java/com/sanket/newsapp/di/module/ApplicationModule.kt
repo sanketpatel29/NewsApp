@@ -2,6 +2,7 @@ package com.sanket.newsapp.di.module
 
 import android.content.Context
 import androidx.room.Room
+import androidx.work.WorkManager
 import com.sanket.newsapp.apputils.Constants
 import com.sanket.newsapp.apputils.NetworkHelper
 import com.sanket.newsapp.apputils.NetworkHelperImpl
@@ -14,6 +15,7 @@ import com.sanket.newsapp.data.local.AppDatabaseService
 import com.sanket.newsapp.data.local.DatabaseService
 import com.sanket.newsapp.di.BaseUrl
 import com.sanket.newsapp.di.DatabaseName
+import com.sanket.newsapp.notifications.NotificationHelper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -90,5 +92,19 @@ class ApplicationModule {
     @Provides
     fun provideNetworkHelper(@ApplicationContext context: Context): NetworkHelper {
         return NetworkHelperImpl(context = context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideWorkManager(
+        @ApplicationContext context: Context
+    ): WorkManager {
+        return WorkManager.getInstance(context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideNotificationHelper(@ApplicationContext context: Context): NotificationHelper {
+        return NotificationHelper(context = context)
     }
 }

@@ -3,7 +3,7 @@ package com.sanket.newsapp.ui.topheadline
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sanket.newsapp.apputils.Constants
-import com.sanket.newsapp.apputils.Constants.COUNTRY
+import com.sanket.newsapp.apputils.Constants.DEFAULT_COUNTRY
 import com.sanket.newsapp.apputils.logger.Logger
 import com.sanket.newsapp.data.model.ApiArticle
 import com.sanket.newsapp.data.repository.TopHeadlineRepository
@@ -31,7 +31,7 @@ class TopHeadlineViewModel @Inject constructor(
 
     private fun fetchNews() {
         viewModelScope.launch {
-            topHeadlineRepository.getTopHeadlines(COUNTRY).catch { e ->
+            topHeadlineRepository.getTopHeadlines(DEFAULT_COUNTRY).catch { e ->
                 _uiState.value = UiState.Error(e.toString())
             }.collect {
                 _uiState.value = UiState.Success(it)

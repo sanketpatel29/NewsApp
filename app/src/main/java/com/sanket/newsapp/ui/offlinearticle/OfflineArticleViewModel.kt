@@ -2,7 +2,7 @@ package com.sanket.newsapp.ui.offlinearticle
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sanket.newsapp.apputils.Constants.COUNTRY
+import com.sanket.newsapp.apputils.Constants.DEFAULT_COUNTRY
 import com.sanket.newsapp.apputils.NetworkHelper
 import com.sanket.newsapp.apputils.logger.Logger
 import com.sanket.newsapp.data.local.entity.Article
@@ -39,7 +39,7 @@ class OfflineArticleViewModel @Inject constructor(
 
     private fun fetchNewsArticles() {
         viewModelScope.launch {
-            topHeadlineRepository.getNewsArticles(COUNTRY)
+            topHeadlineRepository.getNewsArticles(DEFAULT_COUNTRY)
                 .flowOn(Dispatchers.IO)
                 .catch { e ->
                     _uiState.value = UiState.Error(e.toString())
@@ -51,7 +51,7 @@ class OfflineArticleViewModel @Inject constructor(
 
     private fun fetchNewsArticlesFromDb() {
         viewModelScope.launch {
-            topHeadlineRepository.getNewsArticlesDirectFromDb(COUNTRY).catch { e ->
+            topHeadlineRepository.getNewsArticlesDirectFromDb(DEFAULT_COUNTRY).catch { e ->
                 _uiState.value = UiState.Error(e.toString())
             }.collect {
                 _uiState.value = UiState.Success(it)
