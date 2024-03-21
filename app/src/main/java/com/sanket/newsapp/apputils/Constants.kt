@@ -1,8 +1,5 @@
 package com.sanket.newsapp.apputils
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
-
 object Constants {
 
     const val BASE_URL = "https://newsapi.org/v2/"
@@ -11,16 +8,7 @@ object Constants {
     const val FILE_COUNTRIES = "countries.json"
     const val FILE_LANGUAGES = "languages.json"
 
-    sealed class NewsType : Parcelable {
-        @Parcelize
-        data class COUNTRY(var countryCode: String, var type: String = "COUNTRY") : NewsType()
-
-        @Parcelize
-        data class SOURCE(var sounrceId: String, var type: String = "SOURCE") : NewsType()
-
-        @Parcelize
-        data class LANGUAGE(var languageIds: String, var type: String = "LANGUAGE") : NewsType()
-    }
+    const val DATABASE_NAME = "NewsAppDatabase"
 
     object NewsBy {
         object IntentParam {

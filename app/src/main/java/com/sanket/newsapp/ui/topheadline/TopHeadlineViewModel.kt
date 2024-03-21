@@ -2,9 +2,10 @@ package com.sanket.newsapp.ui.topheadline
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sanket.newsapp.apputils.Constants
 import com.sanket.newsapp.apputils.Constants.COUNTRY
 import com.sanket.newsapp.apputils.logger.Logger
-import com.sanket.newsapp.data.model.Article
+import com.sanket.newsapp.data.model.ApiArticle
 import com.sanket.newsapp.data.repository.TopHeadlineRepository
 import com.sanket.newsapp.ui.base.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,16 +25,36 @@ class TopHeadlineViewModel @Inject constructor(
 ) :
     ViewModel() {
 
-    private val _uiState = MutableStateFlow<UiState<List<Article>>>(UiState.Loading)
+    private val _uiState = MutableStateFlow<UiState<List<ApiArticle>>>(UiState.Loading)
 
-    val uiState: StateFlow<UiState<List<Article>>> = _uiState
+    val uiState: StateFlow<UiState<List<ApiArticle>>> = _uiState
 
-    fun fetchNews() {
+    private fun fetchNews() {
         viewModelScope.launch {
             topHeadlineRepository.getTopHeadlines(COUNTRY).catch { e ->
                 _uiState.value = UiState.Error(e.toString())
             }.collect {
                 _uiState.value = UiState.Success(it)
+            }
+        }
+    }
+
+    fun fetchNews(newsType: String, newsIdentifier: String) {
+        when (newsType) {
+            Constants.NewsBy.IntentParam.Value.COUNTRY -> {
+                fetchNewsByCountry(newsIdentifier)
+            }
+
+            Constants.NewsBy.IntentParam.Value.SOURCE -> {
+                fetchNewsBySource(newsIdentifier)
+            }
+
+            Constants.NewsBy.IntentParam.Value.LANGUAGE -> {
+                fetchNewsByLanguage(newsIdentifier)
+            }
+
+            else -> {
+                fetchNews()
             }
         }
     }
@@ -77,10 +98,10 @@ class TopHeadlineViewModel @Inject constructor(
 
             topHeadlineRepository.getNewsByLanguages(lang1)
                 .zip(topHeadlineRepository.getNewsByLanguages(lang2)) { result1, result2 ->
-                    val articles = mutableListOf<Article>()
-                    articles.addAll(result1)
-                    articles.addAll(result2)
-                    return@zip articles
+                    val apiArticles = mutableListOf<ApiArticle>()
+                    apiArticles.addAll(result1)
+                    apiArticles.addAll(result2)
+                    return@zip apiArticles
                 }.flowOn(Dispatchers.IO)
                 .catch { e ->
                     _uiState.value = UiState.Error(e.toString())

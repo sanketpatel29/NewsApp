@@ -69,6 +69,8 @@ dependencies {
     implementation("androidx.compose.material3:material3:1.2.1")
     implementation("androidx.navigation:navigation-compose:2.6.0")
     implementation("io.coil-kt:coil-compose:2.4.0")
+    implementation("androidx.compose.material:material-icons-extended")
+
 
     implementation("androidx.recyclerview:recyclerview:1.2.1")
     implementation("com.github.bumptech.glide:glide:4.11.0")
@@ -84,6 +86,10 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.44")
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.2")
+
+    implementation ("androidx.room:room-runtime:2.5.0")
+    implementation ("androidx.room:room-ktx:2.5.0")
+    kapt ("androidx.room:room-compiler:2.6.1")
 
     kapt("com.google.dagger:hilt-compiler:2.44")
 

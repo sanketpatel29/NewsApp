@@ -1,14 +1,23 @@
 package com.sanket.newsapp.di.module
 
+import android.content.Context
+import androidx.room.Room
 import com.sanket.newsapp.apputils.Constants
+import com.sanket.newsapp.apputils.NetworkHelper
+import com.sanket.newsapp.apputils.NetworkHelperImpl
 import com.sanket.newsapp.apputils.logger.AppLogger
 import com.sanket.newsapp.apputils.logger.Logger
 import com.sanket.newsapp.data.api.HeaderInterceptor
 import com.sanket.newsapp.data.api.NetworkService
+import com.sanket.newsapp.data.local.AppDatabase
+import com.sanket.newsapp.data.local.AppDatabaseService
+import com.sanket.newsapp.data.local.DatabaseService
 import com.sanket.newsapp.di.BaseUrl
+import com.sanket.newsapp.di.DatabaseName
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -53,4 +62,33 @@ class ApplicationModule {
     @Provides
     @Singleton
     fun provideLogger(): Logger = AppLogger()
+
+    @DatabaseName
+    @Provides
+    fun provideDatabaseName(): String = Constants.DATABASE_NAME
+
+    @Provides
+    @Singleton
+    fun provideAppDatabase(
+        @ApplicationContext context: Context,
+        @DatabaseName databaseName: String
+    ): AppDatabase {
+        return Room.databaseBuilder(
+            context,
+            AppDatabase::class.java,
+            databaseName
+        ).build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideDatabaseService(appDatabase: AppDatabase): DatabaseService {
+        return AppDatabaseService(appDatabase)
+    }
+
+    @Singleton
+    @Provides
+    fun provideNetworkHelper(@ApplicationContext context: Context): NetworkHelper {
+        return NetworkHelperImpl(context = context)
+    }
 }

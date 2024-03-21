@@ -16,6 +16,7 @@ import com.sanket.newsapp.ui.countries.CountriesScreenRoute
 import com.sanket.newsapp.ui.home.HomeScreenRoute
 import com.sanket.newsapp.ui.language.LanguagesScreenRoute
 import com.sanket.newsapp.ui.newssource.SourcesScreenRoute
+import com.sanket.newsapp.ui.offlinearticle.OfflineArticleRoute
 import com.sanket.newsapp.ui.search.SearchNewsScreenRoute
 import com.sanket.newsapp.ui.topheadline.TopHeadLineRoute
 
@@ -35,6 +36,7 @@ sealed class Route(val name: String) {
     object NewsByCountries : Route("newsbycountries")
     object NewsByLanguages : Route("newsbylanguages")
     object NewsBySearch : Route("newsbysearch")
+    object OfflineArticle : Route("offlinearticle")
 }
 
 @Preview
@@ -73,7 +75,8 @@ fun NewsNavHost() {
                     openCustomChromeTab(context = context, it)
                 },
                 newsType = newsType ?: "",
-                newsIdentifier = newsTypeId ?: ""
+                newsIdentifier = newsTypeId ?: "",
+                navController = navController
             )
         }
         composable(route = Route.NewsBySource.name) {
@@ -84,7 +87,7 @@ fun NewsNavHost() {
                         newsTypeId = it
                     )
                 )
-            })
+            }, navController = navController)
         }
         composable(route = Route.NewsByCountries.name) {
             CountriesScreenRoute(onNewsClick = {
@@ -94,7 +97,7 @@ fun NewsNavHost() {
                         newsTypeId = it
                     )
                 )
-            })
+            }, navController = navController)
         }
         composable(route = Route.NewsByLanguages.name) {
             LanguagesScreenRoute(onNewsClick = {
@@ -104,12 +107,22 @@ fun NewsNavHost() {
                         newsTypeId = it
                     )
                 )
-            })
+            }, navController = navController)
         }
         composable(route = Route.NewsBySearch.name) {
             SearchNewsScreenRoute(onNewsClick = {
                 openCustomChromeTab(context = context, it)
-            })
+            }, navController = navController)
+        }
+        composable(
+            route = Route.OfflineArticle.name,
+        ) {
+            OfflineArticleRoute(
+                onNewsClick = {
+                    openCustomChromeTab(context = context, it)
+                },
+                navController = navController
+            )
         }
     }
 }

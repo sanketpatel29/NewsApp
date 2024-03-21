@@ -11,10 +11,12 @@ import dagger.hilt.android.AndroidEntryPoint
 class HomeActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             NewsAppTheme {
                 NewsNavHost()
             }
+
         }
     }
 }

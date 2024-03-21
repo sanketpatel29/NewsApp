@@ -12,6 +12,6 @@ data class TopHeadLineResponse(
     var totalResults: Int = 0,
 
     @SerializedName("articles")
-    var articles: ArrayList<Article> = arrayListOf()
+    var apiArticles: ArrayList<ApiArticle> = arrayListOf()
 
 )

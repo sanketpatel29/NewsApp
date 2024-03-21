@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class NewsSourcesResponse(
 
     @SerializedName("sources")
-    var sources: List<Source> = arrayListOf(),
+    var apiSources: List<ApiSource> = arrayListOf(),
 
     @SerializedName("status")
     var status: String = ""

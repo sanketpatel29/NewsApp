@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -19,12 +20,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import com.sanket.newsapp.apputils.Constants
-import com.sanket.newsapp.data.model.Article
-import com.sanket.newsapp.data.model.Source
+import com.sanket.newsapp.data.model.ApiArticle
 import com.sanket.newsapp.ui.base.ShowError
 import com.sanket.newsapp.ui.base.ShowLoading
+import com.sanket.newsapp.ui.base.TopAppBar
 import com.sanket.newsapp.ui.base.UiState
 
 
@@ -34,64 +35,59 @@ fun TopHeadLineRoute(
     onNewsClick: (url: String) -> Unit = {},
     viewModel: TopHeadlineViewModel = hiltViewModel(),
     newsType: String = "",
-    newsIdentifier: String = ""
+    newsIdentifier: String = "",
+    navController: NavController
 ) {
-    val topHeadlineUiState: UiState<List<Article>> by viewModel.uiState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(key1 = Unit, block = {
-        when (newsType) {
-            Constants.NewsBy.IntentParam.Value.COUNTRY -> {
-                viewModel.fetchNewsByCountry(newsIdentifier)
-            }
+    val topHeadlineUiState: UiState<List<ApiArticle>> by viewModel.uiState.collectAsStateWithLifecycle()
+    var title = "Top HeadLines"
 
-            Constants.NewsBy.IntentParam.Value.SOURCE -> {
-                viewModel.fetchNewsBySource(newsIdentifier)
-            }
+    Scaffold(topBar = {
+        TopAppBar(
+            title = title, showBackArrow = true
+        ) { navController.popBackStack() }
+    }, content = { padding ->
 
-            Constants.NewsBy.IntentParam.Value.LANGUAGE -> {
-                viewModel.fetchNewsByLanguage(newsIdentifier)
-            }
+        LaunchedEffect(key1 = Unit, block = {
+            viewModel.fetchNews(newsType, newsIdentifier)
+        })
 
-            else -> {
-                viewModel.fetchNews()
-            }
+        Column(modifier = Modifier.padding(padding)) {
+            TopHeadlineScreen(topHeadlineUiState, onNewsClick)
         }
     })
 
-    Column(modifier = Modifier.padding(4.dp)) {
-        TopHeadlineScreen(topHeadlineUiState, onNewsClick)
-    }
 }
 
 @Composable
-fun ArticleList(articles: List<Article>, onNewsClick: (url: String) -> Unit) {
+fun ArticleList(apiArticles: List<ApiArticle>, onNewsClick: (url: String) -> Unit) {
     LazyColumn {
-        items(articles, key = { article -> article.url }) { article ->
+        items(apiArticles, key = { article -> article.url }) { article ->
             Article(article, onNewsClick)
         }
     }
 }
 
 @Composable
-fun Article(article: Article, onNewsClick: (url: String) -> Unit) {
+fun Article(apiArticle: ApiArticle, onNewsClick: (url: String) -> Unit) {
     Column(modifier = Modifier
         .fillMaxWidth()
         .clickable {
-            if (article.url.isNotEmpty()) {
-                onNewsClick(article.url)
+            if (apiArticle.url.isNotEmpty()) {
+                onNewsClick(apiArticle.url)
             }
         }) {
-        BannerImage(article)
-        TitleText(article.title)
-        DescriptionText(article.description)
-        SourceText(article.source)
+        BannerImage(apiArticle.imageUrl, apiArticle.title)
+        TitleText(apiArticle.title)
+        DescriptionText(apiArticle.description)
+        SourceText(apiArticle.apiSource.name)
     }
 }
 
 @Composable
-fun SourceText(source: Source) {
+fun SourceText(name: String) {
     Text(
-        text = source.name,
+        text = name,
         style = MaterialTheme.typography.titleSmall,
         color = Color.Gray,
         maxLines = 1,
@@ -128,10 +124,10 @@ fun TitleText(title: String = "Title") {
 }
 
 @Composable
-fun BannerImage(article: Article) {
+fun BannerImage(imageUrl: String?, title: String) {
     AsyncImage(
-        model = article.imageUrl,
-        contentDescription = article.title,
+        model = imageUrl,
+        contentDescription = title,
         contentScale = ContentScale.Crop,
         modifier = Modifier
             .height(200.dp)
@@ -141,7 +137,7 @@ fun BannerImage(article: Article) {
 
 @Composable
 fun TopHeadlineScreen(
-    uiState: UiState<List<Article>>,
+    uiState: UiState<List<ApiArticle>>,
     onNewsClick: (url: String) -> Unit
 ) {
     when (uiState) {
