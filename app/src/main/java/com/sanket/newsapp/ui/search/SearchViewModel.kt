@@ -2,19 +2,23 @@ package com.sanket.newsapp.ui.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sanket.newsapp.data.model.Article
+import com.sanket.newsapp.data.model.ApiArticle
 import com.sanket.newsapp.data.repository.TopHeadlineRepository
 import com.sanket.newsapp.ui.base.UiState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SearchViewModel(private val topHeadlineRepository: TopHeadlineRepository) : ViewModel() {
+@HiltViewModel
+class SearchViewModel @Inject constructor(private val topHeadlineRepository: TopHeadlineRepository) :
+    ViewModel() {
 
-    private val _uiState = MutableStateFlow<UiState<List<Article>>>(UiState.Loading)
+    private val _uiState = MutableStateFlow<UiState<List<ApiArticle>>>(UiState.Loading)
 
-    val uiState: StateFlow<UiState<List<Article>>> = _uiState
+    val uiState: StateFlow<UiState<List<ApiArticle>>> = _uiState
 
     var searchPhrase = MutableStateFlow("")
 

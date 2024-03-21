@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">NewsApp</string>
+    <string name="loading">Loading</string>
+
+    <string name="screen_top_headline">Top Headlines</string>
+    <string name="screen_news_sources">News Sources</string>
+    <string name="screen_news_countries">News Countries</string>
+    <string name="screen_news_languages">Languages</string>
+    <string name="screen_search_news">Search News</string>
+    <string name="screen_offline_article">Offline Article</string>
+
+
 </resources>

@@ -6,7 +6,7 @@ import com.google.gson.reflect.TypeToken
 import com.sanket.newsapp.apputils.Constants
 import com.sanket.newsapp.apputils.IOUtils
 import com.sanket.newsapp.data.model.Language
-import com.sanket.newsapp.di.ApplicationContext
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
@@ -20,8 +20,7 @@ class LanguagesRepository @Inject constructor(@ApplicationContext private val co
 
         return flow<List<Language>> {
             val countriesData = IOUtils.readJsonFromAssets(context, Constants.FILE_LANGUAGES)
-            val gson = Gson()
-            emit(gson.fromJson(countriesData, object : TypeToken<List<Language>>() {}.type))
+            emit(Gson().fromJson(countriesData, object : TypeToken<List<Language>>() {}.type))
 
         }.map { it }
     }

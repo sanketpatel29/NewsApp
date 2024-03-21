@@ -6,7 +6,7 @@ import com.google.gson.reflect.TypeToken
 import com.sanket.newsapp.apputils.Constants
 import com.sanket.newsapp.apputils.IOUtils
 import com.sanket.newsapp.data.model.Country
-import com.sanket.newsapp.di.ApplicationContext
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
