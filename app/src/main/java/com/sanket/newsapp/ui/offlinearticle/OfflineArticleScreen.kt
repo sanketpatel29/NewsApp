@@ -74,6 +74,8 @@ fun TopHeadlineScreen(
         is UiState.Error -> {
             ShowError(text = uiState.message)
         }
+
+        else -> {}
     }
 }
 

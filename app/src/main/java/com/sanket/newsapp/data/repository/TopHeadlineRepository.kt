@@ -1,5 +1,8 @@
 package com.sanket.newsapp.data.repository
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.sanket.newsapp.data.api.NetworkService
 import com.sanket.newsapp.data.local.DatabaseService
 import com.sanket.newsapp.data.local.entity.Article
@@ -70,5 +73,11 @@ class TopHeadlineRepository @Inject constructor(
 
     fun getNewsArticlesDirectFromDb(country: String): Flow<List<Article>> {
         return databaseService.getNewsArticles()
+    }
+
+    fun getTopHeadlinesArticles(): Flow<PagingData<ApiArticle>> {
+        return Pager(config = PagingConfig(pageSize = 10),
+            pagingSourceFactory = { TopHeadlinePagingSource(networkService)
+            }).flow
     }
 }

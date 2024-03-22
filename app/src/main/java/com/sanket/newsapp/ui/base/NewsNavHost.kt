@@ -17,6 +17,7 @@ import com.sanket.newsapp.ui.home.HomeScreenRoute
 import com.sanket.newsapp.ui.language.LanguagesScreenRoute
 import com.sanket.newsapp.ui.newssource.SourcesScreenRoute
 import com.sanket.newsapp.ui.offlinearticle.OfflineArticleRoute
+import com.sanket.newsapp.ui.pagination.PaginationTopHeadlineRoute
 import com.sanket.newsapp.ui.search.SearchNewsScreenRoute
 import com.sanket.newsapp.ui.topheadline.TopHeadLineRoute
 
@@ -37,6 +38,7 @@ sealed class Route(val name: String) {
     object NewsByLanguages : Route("newsbylanguages")
     object NewsBySearch : Route("newsbysearch")
     object OfflineArticle : Route("offlinearticle")
+    object PaginationTopHeadline : Route("paginationtopheadline")
 }
 
 @Preview
@@ -118,6 +120,16 @@ fun NewsNavHost() {
             route = Route.OfflineArticle.name,
         ) {
             OfflineArticleRoute(
+                onNewsClick = {
+                    openCustomChromeTab(context = context, it)
+                },
+                navController = navController
+            )
+        }
+        composable(
+            route = Route.PaginationTopHeadline.name,
+        ) {
+            PaginationTopHeadlineRoute(
                 onNewsClick = {
                     openCustomChromeTab(context = context, it)
                 },

@@ -3,6 +3,7 @@
     <string name="loading">Loading</string>
 
     <string name="screen_top_headline">Top Headlines</string>
+    <string name="screen_top_headline_pagination">Pagination Top Headlines</string>
     <string name="screen_news_sources">News Sources</string>
     <string name="screen_news_countries">News Countries</string>
     <string name="screen_news_languages">Languages</string>
