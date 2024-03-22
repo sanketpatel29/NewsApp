@@ -5,10 +5,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.paging.LoadState
@@ -90,18 +96,27 @@ fun ArticleList(articles: LazyPagingItems<ApiArticle>, onNewsClick: (url: String
 
 @Composable
 fun ApiArticle(article: ApiArticle, onNewsClick: (url: String) -> Unit) {
-    Column(modifier = Modifier
-        .fillMaxWidth()
-        .clickable {
-            if (article.url.isNotEmpty()) {
-                onNewsClick(article.url)
-            }
-        }) {
+    Card(
+        shape = RoundedCornerShape(8.dp),
+        modifier = Modifier
+            .shadow(4.dp)
+            .padding(6.dp)
+            .fillMaxWidth(),
+        colors = CardDefaults.cardColors(containerColor = Color(0xFFF5F5F5))
+    ) {
+        Column(modifier = Modifier
+            .fillMaxWidth()
+            .clickable {
+                if (article.url.isNotEmpty()) {
+                    onNewsClick(article.url)
+                }
+            }) {
 
-        BannerImage(imageUrl = article.imageUrl, title = article.title)
-        TitleText(article.title)
-        DescriptionText(article.description)
-        SourceText(article.apiSource.name)
+            BannerImage(imageUrl = article.imageUrl, title = article.title)
+            TitleText(article.title)
+            DescriptionText(article.description)
+            SourceText(article.apiSource.name)
+        }
     }
 
 }
