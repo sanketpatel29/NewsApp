@@ -161,6 +161,7 @@ The repository takes you on an extensive Android development journey using the M
 ## 🚀 About Me
 
 Hello! <br>
-<p>I am Sanket Patel, a Lead Android Developer with a passion for coding and technology. I specialize in crafting innovative solutions and thrive on challenges. During the day, I'm fully immersed in app development, and after hours, I stay up-to-date with the latest tech trends. If you have any questions or need assistance with anything Android-related, let's connect and dive into all things software development together!
+
+I am Sanket Patel, a Lead Android Developer with a passion for coding and technology. I specialize in crafting innovative solutions and thrive on challenges. During the day, I'm fully immersed in app development, and after hours, I stay up-to-date with the latest tech trends. If you have any questions or need assistance with anything Android-related, let's connect and dive into all things software development together!
 - [LinkedIn](https://www.linkedin.com/in/sanket-patel-56164734/)
 - [GitHub](https://github.com/sanketpatel29)
