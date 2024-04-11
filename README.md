@@ -1,7 +1,7 @@
 ## NewsApp with MVVM Architecture   
 <br>
 
-![your gateway to the innovations (1)](https://github.com/sanketpatel29/NewsApp/assets/41280216/ccaf4e40-cab8-4dd6-9af3-b9504fef11b8)
+![git banner for mvvm repo new](https://github.com/sanketpatel29/NewsApp/assets/41280216/cbc363ee-34c5-497f-94f4-6327c9db3107)
 
 <br>
 <br>
