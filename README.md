@@ -8,7 +8,7 @@
 
 The repository takes you on an extensive Android development journey using the MVVM architecture, powered by cutting-edge technologies, showcased through various branches.
 
-1. [with_xml_and_dagger](https://link-url-here.org](https://github.com/sanketpatel29/NewsApp/tree/with_xml_and_dagger)) : <br> Initial implementation featuring traditional UI with XML layouts, employing Dagger 2 for dependency injection.
+1. [with_xml_and_dagger](https://github.com/sanketpatel29/NewsApp/tree/with_xml_and_dagger)) : <br> Initial implementation featuring traditional UI with XML layouts, employing Dagger 2 for dependency injection.
 2. [with_xml_and_dagger_hilt](https://github.com/sanketpatel29/NewsApp/tree/with_xml_and_dagger_hilt): <br> Evolutionary stage integrating Hilt, transitioning from Dagger 2, while retaining XML layouts.
 3. [with_jetpack_compose_and_hilt](https://github.com/sanketpatel29/NewsApp/tree/with_jetpack_compose_and_hilt): <br> Advanced transformation phase, integrating Dagger Hilt alongside the transition from XML layouts to Jetpack Compose, marking a modernized UI approach.
 4. [main](https://github.com/sanketpatel29/NewsApp/tree/main) : <br> The final version incorporates Jetpack Compose for the user interface, Dagger Hilt for managing dependencies, and Room database for handling data, making it the most up-to-date iteration of the architecture.
